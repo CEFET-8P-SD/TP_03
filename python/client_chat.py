@@ -17,5 +17,8 @@ for request in range(10):
     socket.send(msg_bytes)
 
     #  Get the reply.
-    message = socket.recv()
-    print(f"Received reply {request} [ {message} ]")
+    msg_server = socket.recv()
+
+    msg_string = msg_server.decode("utf-8")
+
+    print(f"Received reply {request} [ {msg_string} ]")

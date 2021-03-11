@@ -8,11 +8,15 @@ socket.bind("tcp://*:5555")
 while True:
     #  Wait for next request from client
     msg = socket.recv()
+
     msg_string = msg.decode("utf-8")
+
     print(f"Received request: {msg_string}")
 
     #  Do some 'work'
-    time.sleep(1)
+    time.sleep(0.5)
+
+    to_send = bytes("Você enviou: {}".format(msg_string), 'utf-8')
 
     #  Send reply back to client
-    socket.send(b"World")
+    socket.send(to_send)
