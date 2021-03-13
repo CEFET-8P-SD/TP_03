@@ -37,10 +37,10 @@ class Client:
 
         while True:
             # Read the mensage from terminal
-            mensage = input("Say anything: ")
+            menssage = input("Say anything: ")
 
             hora = datetime.now().strftime('%H:%M:%S')
-            final_menssage = f"{hora} {self.name}: {mensage}"
+            final_menssage = f"{hora} {self.name}: {menssage}"
 
             self.send_mensage(socket, final_menssage)
             print(f"{final_menssage}")

@@ -1,7 +1,7 @@
 import time
 import zmq
 
-
+menssages = []
 class Server:
 
     @staticmethod
@@ -11,6 +11,19 @@ class Server:
         socket.bind(f"tcp://*:{port}")
 
         return socket
+
+    @staticmethod
+    def broadcast_menssage(socket, menssage):
+        socket.connect(f"tcp://localhost:5555")
+        to_send = bytes(f"{menssage}", 'utf-8')
+        socket.send(to_send)
+
+    @staticmethod
+    def send_to_node(socket, menssage):
+        socket.connect("tcp://localhost:5556")
+        to_send = bytes(f"{menssage}", 'utf-8')
+        socket.send(to_send)
+
 
     def run(self):
 
@@ -27,11 +40,8 @@ class Server:
 
             # Wait a litle while
             time.sleep(0.5)
-
-            to_send = bytes(f"{msg_string}", 'utf-8')
-
-            #  Send reply back to client
-            socket.send(to_send)
+            self.send_to_node(socket,msg_string)
+            self.broadcast_menssage(socket, msg_string)
 
 
 server = Server()
