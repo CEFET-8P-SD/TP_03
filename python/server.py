@@ -14,7 +14,7 @@ class Chat_Python:
         return socket
 
     @staticmethod
-    def connect_node(port):
+    def connect_java(port):
 
         context2 = zmq.Context()
         socket2 = context2.socket(zmq.REQ)
@@ -34,15 +34,9 @@ class Chat_Python:
         to_send = bytes(f"{menssage}", 'utf-8')
         socket.send(to_send)
 
-    '''
-    @staticmethod
-    def recv_from_node(socket):
-        socket.recv()
-    '''
-
     @staticmethod
     def read_msg(name):
-        menssage = input("Say anything: ")
+        menssage = input("Say anything: \n")
 
         hora = datetime.now().strftime('%H:%M:%S')
         final_menssage = f"{hora} {name}: {menssage}"
@@ -52,10 +46,10 @@ class Chat_Python:
     @staticmethod
     def set_name():
         print("----------------------------------")
-        print("     Welcome to Python Chat…      ")
+        print("     Welcome to Python Chat       ")
         print("----------------------------------")
 
-        name = input("What is your name? ")
+        name = input("What is your name? \n")
 
         return name
 
@@ -65,7 +59,7 @@ class Chat_Python:
 
         socket = self.connect(port='5555')
 
-        socket_java = self.connect_node(port='5556')
+        socket_java = self.connect_java(port='5556')
 
         while True:
             menssage = self.read_msg(name)
@@ -77,24 +71,8 @@ class Chat_Python:
 
             socket.send(b"Recebido")
 
-            print(msg)
-'''
-            #  Wait for next request from client
-            msg = socket.recv()
-
             msg_string = msg.decode("utf-8")
-
-            print(f"{msg_string}")
-
-            # Wait a litle while
-            time.sleep(0.5)
-            self.broadcast_menssage(socket, ' ')
-
-            time.sleep(0.5)
-            self.send_to_node(socket_node,msg_string)
-            self.recv_from_node(socket_node)
-'''
-
+            print(msg_string)
 
 server = Chat_Python()
 server.run()
